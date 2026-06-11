@@ -1,49 +1,79 @@
 ﻿@model Apex_database.Models.Faehigkeit
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Fähigkeit modifizieren";
 }
 
-<h1>Edit</h1>
+<style>
+    .form-dark-control {
+        background-color: #1a1a1a !important;
+        border: 1px solid #333 !important;
+        color: #fff !important;
+    }
 
-<h4>Faehigkeit</h4>
-<hr />
+        .form-dark-control:focus {
+            border-color: #da292a !important;
+            box-shadow: 0 0 0 0.25rem rgba(218, 41, 42, 0.25) !important;
+        }
+
+    select.form-dark-control option {
+        background-color: #1a1a1a;
+        color: #fff;
+    }
+</style>
+
+<div class="mb-4">
+    <h1 class="fw-bold mb-1" style="color: #da292a;">Fähigkeit anpassen</h1>
+    <p class="text-muted small">Justiere die Parameter und Balance-Werte</p>
+</div>
+
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="FaehigkeitId" />
-            <div class="form-group">
-                <label asp-for="CharakterId" class="control-label"></label>
-                <select asp-for="CharakterId" class="form-control" asp-items="ViewBag.CharakterId"></select>
-                <span asp-validation-for="CharakterId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Typ" class="control-label"></label>
-                <input asp-for="Typ" class="form-control" />
-                <span asp-validation-for="Typ" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CooldownSek" class="control-label"></label>
-                <input asp-for="CooldownSek" class="form-control" />
-                <span asp-validation-for="CooldownSek" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="col-md-6 col-lg-5">
+        <div class="card bg-dark border-secondary shadow p-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <input type="hidden" asp-for="FaehigkeitId" />
+
+                <div class="form-group mb-3">
+                    <label class="control-label text-muted small fw-bold mb-1">Fähigkeit ID (Festgelegt)</label>
+                    <input class="form-control form-dark-control" value="@Model.FaehigkeitId" disabled style="opacity: 0.5; cursor: not-allowed;" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="CharakterId" class="control-label text-muted small fw-bold mb-1">Zugeordnete Legende</label>
+                    <select asp-for="CharakterId" class="form-control form-dark-control" asp-items="ViewBag.CharakterId"></select>
+                    <span asp-validation-for="CharakterId" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="control-label text-muted small fw-bold mb-1">Name</label>
+                    <input asp-for="Name" class="form-control form-dark-control" />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Typ" class="control-label text-muted small fw-bold mb-1">Typ</label>
+                    <input asp-for="Typ" class="form-control form-dark-control" />
+                    <span asp-validation-for="Typ" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="CooldownSek" class="control-label text-muted small fw-bold mb-1">Cooldown (Sekunden)</label>
+                    <input asp-for="CooldownSek" class="form-control form-dark-control" />
+                    <span asp-validation-for="CooldownSek" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-apex px-4">Speichern</button>
+                    <a asp-action="Index" class="btn btn-outline-light border-secondary px-4">Abbrechen</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

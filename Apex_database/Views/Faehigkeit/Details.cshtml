@@ -1,42 +1,71 @@
 ﻿@model Apex_database.Models.Faehigkeit
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Fähigkeitsdetails";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Faehigkeit</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Typ)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Typ)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CooldownSek)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CooldownSek)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Charakter)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Charakter.CharakterId)
-        </dd>
-    </dl>
+<div class="mb-4">
+    <h1 class="fw-bold mb-1" style="color: #da292a;">Spezifikation: @Html.DisplayFor(model => model.Name)</h1>
+    <p class="text-muted small">Technische Daten der Klasseneigenschaft</p>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.FaehigkeitId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="row">
+    <div class="col-md-6 col-lg-5">
+        <div class="card bg-dark border-secondary shadow mb-4">
+            <div class="card-header border-bottom border-secondary bg-transparent py-3 px-4">
+                <h5 class="mb-0 fw-bold text-light">Fähigkeits-Akte</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="row mb-3">
+                    <div class="col-4 text-muted small fw-bold text-uppercase">System ID:</div>
+                    <div class="col-8 text-light font-monospace">@Html.DisplayFor(model => model.FaehigkeitId)</div>
+                </div>
+                <hr class="border-secondary my-2" />
+                <div class="row mb-3 mt-2">
+                    <div class="col-4 text-muted small fw-bold text-uppercase">Bezeichnung:</div>
+                    <div class="col-8 text-light fw-bold fs-5">@Html.DisplayFor(model => model.Name)</div>
+                </div>
+                <hr class="border-secondary my-2" />
+                <div class="row mb-3 mt-2">
+                    <div class="col-4 text-muted small fw-bold text-uppercase">Kategorie:</div>
+                    <div class="col-8">
+                        @{
+                            var t = Model.Typ?.ToLower() ?? "";
+                            var badgeColor = t.Contains("ultimativ") || t.Contains("ultimate") ? "bg-danger" :
+                            t.Contains("taktisch") || t.Contains("tactical") ? "bg-info text-dark" :
+                            t.Contains("passiv") || t.Contains("passive") ? "bg-secondary" :
+                            "bg-dark border border-secondary text-muted";
+                        }
+                        <span class="badge @badgeColor px-2.5 py-1.5 fw-semibold text-uppercase">@Html.DisplayFor(model => model.Typ)</span>
+                    </div>
+                </div>
+                <hr class="border-secondary my-2" />
+                <div class="row mb-3 mt-2">
+                    <div class="col-4 text-muted small fw-bold text-uppercase">Abklingzeit:</div>
+                    <div class="col-8 text-light font-monospace">
+                        @if (Model.CooldownSek > 0)
+                        {
+                            <span>⏱️ @Model.CooldownSek Sekunden</span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Konstanter / Passiver Effekt</span>
+                        }
+                    </div>
+                </div>
+                <hr class="border-secondary my-2" />
+                <div class="row mb-2 mt-2">
+                    <div class="col-4 text-muted small fw-bold text-uppercase">Nutzer (Legende):</div>
+                    <div class="col-8">
+                        <span class="badge bg-light text-dark fw-bold px-2 py-1 font-monospace">👤 Legenden-ID: @Html.DisplayFor(model => model.Charakter.CharakterId)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <a asp-action="Edit" asp-route-id="@Model?.FaehigkeitId" class="btn btn-apex px-4">Modifizieren</a>
+            <a asp-action="Index" class="btn btn-outline-light border-secondary px-4">Zurück zur Liste</a>
+        </div>
+    </div>
 </div>

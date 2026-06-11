@@ -1,53 +1,73 @@
 ﻿@model IEnumerable<Apex_database.Models.Faehigkeit>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Fähigkeiten Übersicht";
 }
 
-<h1>Index</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="fw-bold mb-1" style="color: #da292a;">Kit & Fähigkeiten</h1>
+        <p class="text-muted small mb-0">Übersicht aller taktischen, passiven und ultimativen Fertigkeiten der Legenden</p>
+    </div>
+    <a asp-action="Create" class="btn btn-apex">+ Neue Fähigkeit</a>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Typ)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CooldownSek)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Charakter)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Typ)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CooldownSek)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Charakter.CharakterId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.FaehigkeitId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FaehigkeitId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FaehigkeitId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="card bg-dark border-secondary shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-dark table-hover table-striped align-middle mb-0">
+            <thead>
+                <tr class="border-bottom border-secondary text-uppercase fs-7">
+                    <th class="py-3 px-4" style="color: #da292a;">@Html.DisplayNameFor(model => model.Name)</th>
+                    <th class="py-3" style="color: #da292a;">@Html.DisplayNameFor(model => model.Typ)</th>
+                    <th class="py-3" style="color: #da292a;">@Html.DisplayNameFor(model => model.CooldownSek)</th>
+                    <th class="py-3" style="color: #da292a;">Legende (ID)</th>
+                    <th class="py-3 text-end px-4" style="color: #da292a;">Aktionen</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="border-bottom border-secondary">
+                        <td class="fw-bold text-light py-3 px-4 fs-5">@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>
+                            @{
+                                var t = item.Typ?.ToLower() ?? "";
+                                var badgeColor = t.Contains("ultimativ") || t.Contains("ultimate") ? "bg-danger" :
+                                t.Contains("taktisch") || t.Contains("tactical") ? "bg-info text-dark" :
+                                t.Contains("passiv") || t.Contains("passive") ? "bg-secondary" :
+                                "bg-dark border border-secondary text-muted";
+                            }
+                            <span class="badge @badgeColor px-2.5 py-1.5 fw-semibold text-uppercase">@Html.DisplayFor(modelItem => item.Typ)</span>
+                        </td>
+                        <td class="text-light font-monospace">
+                            @if (item.CooldownSek > 0)
+                            {
+                                <span>⏱️ @item.CooldownSek Sek.</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted small">Kein Cooldown</span>
+                            }
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark fw-bold px-2 py-1 font-monospace">👤 ID: @Html.DisplayFor(modelItem => item.Charakter.CharakterId)</span>
+                        </td>
+                        <td class="text-end px-4">
+                            <div class="btn-group btn-group-sm">
+                                <a asp-action="Edit" asp-route-id="@item.FaehigkeitId" class="btn btn-outline-light border-secondary">Bearbeiten</a>
+                                <a asp-action="Details" asp-route-id="@item.FaehigkeitId" class="btn btn-outline-info border-secondary">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.FaehigkeitId" class="btn btn-outline-danger border-secondary">Entfernen</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-muted">Bisher wurden keine Fähigkeiten im System eingetragen.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
