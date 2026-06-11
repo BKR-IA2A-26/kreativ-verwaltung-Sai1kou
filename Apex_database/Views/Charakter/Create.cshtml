@@ -1,43 +1,62 @@
 ﻿@model Apex_database.Models.Charakter
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Legende hinzufügen";
 }
 
-<h1>Create</h1>
+<style>
+    .form-dark-control {
+        background-color: #1a1a1a !important;
+        border: 1px solid #333 !important;
+        color: #fff !important;
+    }
 
-<h4>Charakter</h4>
-<hr />
+        .form-dark-control:focus {
+            border-color: #da292a !important;
+            box-shadow: 0 0 0 0.25rem rgba(218, 41, 42, 0.25) !important;
+        }
+</style>
+
+<div class="mb-4">
+    <h1 class="fw-bold mb-1" style="color: #da292a;">Legende registrieren</h1>
+    <p class="text-muted small">Füge einen neuen Kämpfer zur Spieldatenbank hinzu</p>
+</div>
+
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CharakterId" class="control-label"></label>
-                <input asp-for="CharakterId" class="form-control" />
-                <span asp-validation-for="CharakterId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Klasse" class="control-label"></label>
-                <input asp-for="Klasse" class="form-control" />
-                <span asp-validation-for="Klasse" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="col-md-6 col-lg-5">
+        <div class="card bg-dark border-secondary shadow p-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="CharakterId" class="control-label text-muted small fw-bold mb-1">Eigene Charakter ID</label>
+                    <input asp-for="CharakterId" class="form-control form-dark-control" placeholder="z.B. 10" />
+                    <span asp-validation-for="CharakterId" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="control-label text-muted small fw-bold mb-1">Name der Legende</label>
+                    <input asp-for="Name" class="form-control form-dark-control" placeholder="z.B. Wraith, Gibraltar..." />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="Klasse" class="control-label text-muted small fw-bold mb-1">Rolle / Klasse</label>
+                    <input asp-for="Klasse" class="form-control form-dark-control" placeholder="z.B. Angriff, Aufklärung, Support" />
+                    <span asp-validation-for="Klasse" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-apex px-4">Erstellen</button>
+                    <a asp-action="Index" class="btn btn-outline-light border-secondary px-4">Abbrechen</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

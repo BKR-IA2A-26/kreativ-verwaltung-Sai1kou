@@ -1,41 +1,81 @@
 ﻿@model IEnumerable<Apex_database.Models.Charakter>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Legenden Übersicht";
 }
 
-<h1>Index</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="fw-bold mb-1" style="color: #da292a;">Apex Legenden</h1>
+        <p class="text-muted small mb-0">Übersicht aller verfügbaren Operator der Arena</p>
+    </div>
+    <a asp-action="Create" class="btn btn-apex">+ Neue Legende</a>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Klasse)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Klasse)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CharakterId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CharakterId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CharakterId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="card bg-dark border-secondary shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-dark table-hover table-striped align-middle mb-0">
+            <thead>
+                <tr class="border-bottom border-secondary text-uppercase fs-7">
+                    <th class="py-3 px-4" style="color: #da292a;">@Html.DisplayNameFor(model => model.Name)</th>
+                    <th class="py-3" style="color: #da292a;">@Html.DisplayNameFor(model => model.Klasse)</th>
+                    <th class="py-3 text-end px-4" style="color: #da292a;">Aktionen</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="border-bottom border-secondary">
+                        <td class="fw-bold text-light py-3 px-4 fs-5">@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>
+                            @{
+                                var k = item.Klasse?.ToLower() ?? "";
+                                var badgeClass = "badge px-2.5 py-1.5 fw-semibold text-uppercase";
+                                var badgeStyle = "";
+
+                                if (k.Contains("angriff") || k.Contains("assault"))
+                                {
+                                    badgeClass += " bg-danger"; // Rot
+                                }
+                                else if (k.Contains("aufklärung") || k.Contains("recon"))
+                                {
+                                    badgeClass += " bg-success"; // Grün
+                                }
+                                else if (k.Contains("unterstützung") || k.Contains("support"))
+                                {
+                                    badgeClass += " bg-info text-dark"; // Hellblau
+                                }
+                                else if (k.Contains("controller") || k.Contains("kontrolle"))
+                                {
+                                    badgeStyle = "background-color: #20c997; color: #121212;"; // Türkis / Teal (Dunkler Text für Lesbarkeit)
+                                }
+                                else if (k.Contains("skirmisher") || k.Contains("scharmützel"))
+                                {
+                                    badgeClass += " bg-warning text-dark"; // Gelb / Gold
+                                }
+                                else
+                                {
+                                    badgeClass += " bg-secondary"; // Standard Grauton für Unbekanntes
+                                }
+                            }
+                            <span class="@badgeClass" style="@badgeStyle">@Html.DisplayFor(modelItem => item.Klasse)</span>
+                        </td>
+                        <td class="text-end px-4">
+                            <div class="btn-group btn-group-sm">
+                                <a asp-action="Edit" asp-route-id="@item.CharakterId" class="btn btn-outline-light border-secondary">Bearbeiten</a>
+                                <a asp-action="Details" asp-route-id="@item.CharakterId" class="btn btn-outline-info border-secondary">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.CharakterId" class="btn btn-outline-danger border-secondary">Entfernen</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="3" class="text-center py-5 text-muted">Es wurden noch keine Legenden in der Arena gesichtet.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
