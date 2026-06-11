@@ -1,42 +1,55 @@
 ﻿@model Apex_database.Models.HeilItem
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Gegenstands-Analyse";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>HeilItem</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HeilungHp)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HeilungHp)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HeilungSchild)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HeilungSchild)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AnwendungsdauerSek)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AnwendungsdauerSek)
-        </dd>
-    </dl>
+<div class="mb-4">
+    <h1 class="fw-bold mb-1" style="color: #da292a;">Datenblatt: @Html.DisplayFor(model => model.Name)</h1>
+    <p class="text-muted small">Laborwerte der Regenerations-Eigenschaften</p>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.HeilId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="row">
+    <div class="col-md-6 col-lg-5">
+        <div class="card bg-dark border-secondary shadow mb-4">
+            <div class="card-header border-bottom border-secondary bg-transparent py-3 px-4">
+                <h5 class="mb-0 fw-bold text-light">Item-Spezifikation</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="row mb-3">
+                    <div class="col-5 text-muted small fw-bold text-uppercase">Gegenstands ID:</div>
+                    <div class="col-7 text-light font-monospace">@Html.DisplayFor(model => model.HeilId)</div>
+                </div>
+                <hr class="border-secondary my-2" />
+                <div class="row mb-3 mt-2">
+                    <div class="col-5 text-muted small fw-bold text-uppercase">Bezeichnung:</div>
+                    <div class="col-7 text-light fw-bold fs-5">@Html.DisplayFor(model => model.Name)</div>
+                </div>
+                <hr class="border-secondary my-2" />
+                <div class="row mb-3 mt-2">
+                    <div class="col-5 text-muted small fw-bold text-uppercase">HP Regeneration:</div>
+                    <div class="col-7 text-success fw-bold">
+                        💚 +@Html.DisplayFor(model => model.HeilungHp) TP
+                    </div>
+                </div>
+                <hr class="border-secondary my-2" />
+                <div class="row mb-3 mt-2">
+                    <div class="col-5 text-muted small fw-bold text-uppercase">Schild-Kapazität:</div>
+                    <div class="col-7 text-info fw-bold">
+                        🛡️ +@Html.DisplayFor(model => model.HeilungSchild) Punkte
+                    </div>
+                </div>
+                <hr class="border-secondary my-2" />
+                <div class="row mb-2 mt-2">
+                    <div class="col-5 text-muted small fw-bold text-uppercase">Einsatzverzögerung:</div>
+                    <div class="col-7 text-light font-monospace">⏱️ @Html.DisplayFor(model => model.AnwendungsdauerSek) Sekunden</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <a asp-action="Edit" asp-route-id="@Model?.HeilId" class="btn btn-apex px-4">Editieren</a>
+            <a asp-action="Index" class="btn btn-outline-light border-secondary px-4">Zurück zum Lager</a>
+        </div>
+    </div>
 </div>

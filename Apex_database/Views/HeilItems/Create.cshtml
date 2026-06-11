@@ -1,51 +1,69 @@
 ﻿@model Apex_database.Models.HeilItem
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Heilitem hinzufügen";
 }
 
-<h1>Create</h1>
+<style>
+    .form-dark-control {
+        background-color: #1a1a1a !important;
+        border: 1px solid #333 !important;
+        color: #fff !important;
+    }
+    .form-dark-control:focus {
+        border-color: #da292a !important;
+        box-shadow: 0 0 0 0.25rem rgba(218, 41, 42, 0.25) !important;
+    }
+</style>
 
-<h4>HeilItem</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="HeilId" class="control-label"></label>
-                <input asp-for="HeilId" class="form-control" />
-                <span asp-validation-for="HeilId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HeilungHp" class="control-label"></label>
-                <input asp-for="HeilungHp" class="form-control" />
-                <span asp-validation-for="HeilungHp" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HeilungSchild" class="control-label"></label>
-                <input asp-for="HeilungSchild" class="form-control" />
-                <span asp-validation-for="HeilungSchild" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AnwendungsdauerSek" class="control-label"></label>
-                <input asp-for="AnwendungsdauerSek" class="form-control" />
-                <span asp-validation-for="AnwendungsdauerSek" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="mb-4">
+    <h1 class="fw-bold mb-1" style="color: #da292a;">Versorgungsgüter anfordern</h1>
+    <p class="text-muted small">Registriere ein neues medizinisches Kit oder Schildaufladung</p>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="row">
+    <div class="col-md-6 col-lg-5">
+        <div class="card bg-dark border-secondary shadow p-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                
+                <div class="form-group mb-3">
+                    <label asp-for="HeilId" class="control-label text-muted small fw-bold mb-1">Heilitem ID</label>
+                    <input asp-for="HeilId" class="form-control form-dark-control" placeholder="z.B. 401" />
+                    <span asp-validation-for="HeilId" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="control-label text-muted small fw-bold mb-1">Name des Gegenstands</label>
+                    <input asp-for="Name" class="form-control form-dark-control" placeholder="z.B. Phoenix-Kit, Schildbatterie..." />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label asp-for="HeilungHp" class="control-label text-muted small fw-bold mb-1">Heilung TP (Trefferpunkte)</label>
+                    <input asp-for="HeilungHp" class="form-control form-dark-control" placeholder="0 für reine Schildaufladung" />
+                    <span asp-validation-for="HeilungHp" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="HeilungSchild" class="control-label text-muted small fw-bold mb-1">Schild-Wiederherstellung</label>
+                    <input asp-for="HeilungSchild" class="form-control form-dark-control" placeholder="0 für reine HP-Heilung" />
+                    <span asp-validation-for="HeilungSchild" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="AnwendungsdauerSek" class="control-label text-muted small fw-bold mb-1">Anwendungszeit (Sekunden)</label>
+                    <input asp-for="AnwendungsdauerSek" class="form-control form-dark-control" placeholder="z.B. 5" />
+                    <span asp-validation-for="AnwendungsdauerSek" class="text-danger small"></span>
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-apex px-4">Hinzufügen</button>
+                    <a asp-action="Index" class="btn btn-outline-light border-secondary px-4">Abbrechen</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
