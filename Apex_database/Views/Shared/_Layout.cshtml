@@ -1,64 +1,162 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Apex_database</title>
+    <title>@ViewData["Title"] - ApexDB</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Apex_database.styles.css" asp-append-version="true" />
+
+    <style>
+        body {
+            background-color: #121212;
+            color: #f0f0f0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Layout-Wrapper für Sidebar + Content */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Schlichte, moderne Sidebar */
+        .sidebar {
+            width: 260px;
+            background-color: #161616;
+            border-right: 1px solid #252525;
+            padding: 30px 15px;
+            display: flex;
+            flex-column: column;
+            position: fixed;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        /* Großer Apex-Schriftzug oben in der Sidebar */
+        .sidebar-brand {
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: #da292a !important;
+            letter-spacing: 2px;
+            text-decoration: none;
+            margin-bottom: 40px;
+            padding-left: 15px;
+            display: block;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        /* Minimalistische Navigations-Links */
+        .sidebar-link {
+            color: #999999 !important;
+            text-decoration: none !important;
+            padding: 12px 15px;
+            display: block;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease-in-out;
+        }
+
+            /* Moderner Hover-Effekt: Text wird weiß, roter Akzent-Strich links */
+            .sidebar-link:hover {
+                color: #ffffff !important;
+                background-color: #1d1d1d;
+                border-left: 3px solid #da292a;
+                padding-left: 18px; /* Leichtes Einrücken beim Hovern */
+            }
+
+        /* Hauptinhalt rechts von der Sidebar */
+        .main-content {
+            flex-grow: 1;
+            margin-left: 260px; /* Platzhalter für die fixed Sidebar */
+            padding: 40px;
+            background-color: #121212;
+        }
+
+        /* Allgemeine Design-Korrekturen für ein cleanes Look & Feel */
+        .btn-apex {
+            background-color: #da292a;
+            color: white;
+            border: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+            .btn-apex:hover {
+                background-color: #b32122;
+                color: white;
+                box-shadow: 0 4px 12px rgba(218, 41, 42, 0.3);
+            }
+
+        /* Responsive Anpassung für kleinere Bildschirme (Mobilgeräte) */
+        @@media (max-width: 991px) {
+            .app-container
+
+        {
+            flex-direction: column;
+        }
+
+        .sidebar {
+            position: static;
+            width: 100%;
+            height: auto;
+            padding: 20px;
+            border-right: none;
+            border-bottom: 1px solid #252525;
+        }
+
+        .sidebar-brand {
+            margin-bottom: 20px;
+        }
+
+        .main-content {
+            margin-left: 0;
+            padding: 20px;
+        }
+
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Apex_database</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Waffen" asp-action="Index">Waffen</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Aufsatzs" asp-action="Index">Aufsätze</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Charakter" asp-action="Index">Charakter</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Faehigkeit" asp-action="Index">Fähigkeiten</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="HeilItems" asp-action="Index">HeilItems</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="LootKategorien" asp-action="Index">LootKategorien</a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="app-container">
+        <nav class="sidebar">
+            <div class="w-100">
+                <a class="sidebar-brand" asp-controller="Home" asp-action="Index">APEX_DB</a>
+
+                <ul class="sidebar-nav">
+                    <li><a class="sidebar-link" asp-controller="Home" asp-action="Index">Dashboard (Home)</a></li>
+                    <li><a class="sidebar-link" asp-controller="Waffen" asp-action="Index">Waffen</a></li>
+                    <li><a class="sidebar-link" asp-controller="Charakter" asp-action="Index">Legenden</a></li>
+                    <li><a class="sidebar-link" asp-controller="Faehigkeit" asp-action="Index">Fähigkeiten</a></li>
+                    <li><a class="sidebar-link" asp-controller="Aufsatzs" asp-action="Index">Aufsätze</a></li>
+                    <li><a class="sidebar-link" asp-controller="HeilItems" asp-action="Index">Heil-Items</a></li>
+                    <li><a class="sidebar-link" asp-controller="Karten" asp-action="Index">Karten</a></li>
+                    <li><a class="sidebar-link" asp-controller="LootKategorie" asp-action="Index">Loot-Kategorien</a></li>
+                </ul>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+        <main role="main" class="main-content">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Apex_database - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

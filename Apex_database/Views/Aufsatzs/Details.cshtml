@@ -1,36 +1,50 @@
 ﻿@model Apex_database.Models.Aufsatz
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Aufsatz Details";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Aufsatz</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Typ)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Typ)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Seltenheit)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Seltenheit)
-        </dd>
-    </dl>
+<div class="mb-4">
+    <h1 class="fw-bold mb-1" style="color: #da292a;">Aufsatz-Details</h1>
+    <p class="text-muted small">Detaillierte Übersicht aus der Datenbank</p>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.AufsatzId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="row">
+    <div class="col-md-6 col-lg-5">
+        <div class="card bg-dark border-secondary shadow mb-4">
+            <div class="card-header border-bottom border-secondary bg-transparent py-3 px-4">
+                <h5 class="mb-0 fw-bold text-light">@Html.DisplayFor(model => model.Name)</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="row mb-3">
+                    <div class="col-4 text-muted small fw-bold text-uppercase">Aufsatz ID:</div>
+                    <div class="col-8 text-light font-monospace">@Html.DisplayFor(model => model.AufsatzId)</div>
+                </div>
+                <hr class="border-secondary my-2" />
+                <div class="row mb-3 mt-2">
+                    <div class="col-4 text-muted small fw-bold text-uppercase">Typ / Slot:</div>
+                    <div class="col-8 text-light">@Html.DisplayFor(model => model.Typ)</div>
+                </div>
+                <hr class="border-secondary my-2" />
+                <div class="row mb-2 mt-2">
+                    <div class="col-4 text-muted small fw-bold text-uppercase">Seltenheit:</div>
+                    <div class="col-8">
+                        @{
+                            var s = Model.Seltenheit?.ToLower();
+                            var badgeColor = s == "legendär" || s == "gold" ? "bg-warning text-dark" :
+                            s == "episch" || s == "lila" ? "bg-primary" :
+                            s == "selten" || s == "blau" ? "bg-info text-dark" :
+                            "bg-secondary";
+                        }
+                        <span class="badge @badgeColor px-2.5 py-1.5 fw-semibold">@Html.DisplayFor(model => model.Seltenheit)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <a asp-action="Edit" asp-route-id="@Model?.AufsatzId" class="btn btn-apex px-4">Bearbeiten</a>
+            <a asp-action="Index" class="btn btn-outline-light border-secondary px-4">Zurück zur Liste</a>
+        </div>
+    </div>
 </div>
