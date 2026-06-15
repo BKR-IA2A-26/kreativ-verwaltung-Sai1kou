@@ -1,36 +1,51 @@
 ﻿@model Apex_database.Models.Karte
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Karte erfassen";
 }
 
-<h1>Create</h1>
+<style>
+    .form-dark-control {
+        background-color: #1a1a1a !important;
+        border: 1px solid #333 !important;
+        color: #fff !important;
+    }
+    .form-dark-control:focus {
+        border-color: #da292a !important;
+        box-shadow: 0 0 0 0.25rem rgba(218, 41, 42, 0.25) !important;
+    }
+</style>
 
-<h4>Karte</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="KarteId" class="control-label"></label>
-                <input asp-for="KarteId" class="form-control" />
-                <span asp-validation-for="KarteId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="mb-4">
+    <h1 class="fw-bold mb-1" style="color: #da292a;">Neuen Sektor erschließen</h1>
+    <p class="text-muted small">Füge ein neues Kampfgebiet zu den Apex-Spielen hinzu</p>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="row">
+    <div class="col-md-6 col-lg-5">
+        <div class="card bg-dark border-secondary shadow p-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                
+                <div class="form-group mb-3">
+                    <label asp-for="KarteId" class="control-label text-muted small fw-bold mb-1">Karten / Sektor ID</label>
+                    <input asp-for="KarteId" class="form-control form-dark-control" placeholder="z.B. 701" />
+                    <span asp-validation-for="KarteId" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="Name" class="control-label text-muted small fw-bold mb-1">Name des Einsatzgebietes</label>
+                    <input asp-for="Name" class="form-control form-dark-control" placeholder="z.B. Rand der Welt, Königsschlucht..." />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-apex px-4">Initialisieren</button>
+                    <a asp-action="Index" class="btn btn-outline-light border-secondary px-4">Abbrechen</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

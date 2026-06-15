@@ -1,35 +1,53 @@
 ﻿@model IEnumerable<Apex_database.Models.Karte>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Einsatzgebiete";
 }
 
-<h1>Index</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="fw-bold mb-1" style="color: #da292a;">Apex-Austragungsorte</h1>
+        <p class="text-muted small mb-0">Verwaltung der offiziellen Karten des Apex-Turniers</p>
+    </div>
+    <a asp-action="Create" class="btn btn-apex">+ Neue Karte registrieren</a>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.KarteId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.KarteId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.KarteId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="card bg-dark border-secondary shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-dark table-hover table-striped align-middle mb-0">
+            <thead>
+                <tr class="border-bottom border-secondary text-uppercase fs-7">
+                    <th class="py-3 px-4" style="color: #da292a; width: 20%;">Sektor ID</th>
+                    <th class="py-3" style="color: #da292a;">@Html.DisplayNameFor(model => model.Name)</th>
+                    <th class="py-3 text-end px-4" style="color: #da292a; width: 35%;">Einsatzbefehle</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="border-bottom border-secondary">
+                        <td class="text-muted font-monospace py-3 px-4">
+                            🌐 #@Html.DisplayFor(modelItem => item.KarteId)
+                        </td>
+                        <td class="fw-bold text-light fs-5">
+                            🗺️ @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td class="text-end px-4">
+                            <div class="btn-group btn-group-sm">
+                                <a asp-action="Edit" asp-route-id="@item.KarteId" class="btn btn-outline-light border-secondary">Umbennen</a>
+                                <a asp-action="Details" asp-route-id="@item.KarteId" class="btn btn-outline-info border-secondary">Scannen</a>
+                                <a asp-action="Delete" asp-route-id="@item.KarteId" class="btn btn-outline-danger border-secondary">Deaktivieren</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="3" class="text-center py-5 text-muted">Keine Einsatzgebiete in der Datenbank gefunden.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
